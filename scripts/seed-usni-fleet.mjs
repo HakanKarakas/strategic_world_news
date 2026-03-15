@@ -10,6 +10,7 @@
  */
 
 import { loadEnvFile, CHROME_UA, runSeed, writeExtraKey } from './_seed-utils.mjs';
+import http from 'node:http';
 import https from 'node:https';
 import zlib from 'node:zlib';
 import { execFileSync } from 'node:child_process';
@@ -65,7 +66,7 @@ function fetchViaHttpProxy(url, proxyAuth) {
     const proxyUrl = new URL(`http://${proxyAuth}`);
     const targetUrl = new URL(url);
 
-    const connectReq = require('node:http').request({
+    const connectReq = http.request({
       host: proxyUrl.hostname,
       port: proxyUrl.port || 3128,
       method: 'CONNECT',

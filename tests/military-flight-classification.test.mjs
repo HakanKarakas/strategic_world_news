@@ -170,6 +170,21 @@ describe('military flight classification', () => {
     });
   });
 
+  it('does not false-positive short operator acronyms inside unrelated words', () => {
+    assert.equal(deriveOperatorFromSourceMeta({
+      operatorName: 'Civil Aircraft Leasing',
+      aircraftTypeLabel: 'aircraft transport',
+      registration: 'G-RAFT',
+      aircraftDescription: 'airplane traffic platform',
+    }), null);
+
+    assert.equal(deriveOperatorFromSourceMeta({
+      operatorName: 'General planning systems',
+      aircraftTypeLabel: 'airplane transport',
+      aircraftDescription: 'airplane support',
+    }), null);
+  });
+
   it('preserves source metadata and source-based inference in accepted flight records', () => {
     const state = makeState({
       icao24: 'ADF800',

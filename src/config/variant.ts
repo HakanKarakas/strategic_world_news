@@ -18,6 +18,10 @@ export const SITE_VARIANT: string = (() => {
 
   const h = location.hostname;
   if (h.startsWith('tech.')) return 'tech';
+  if (h.includes('strategicworldtech')) return 'tech';
+if (h.includes('strategicworldfinance')) return 'finance';
+if (h.includes('strategicworldnewshappy')) return 'happy';
+if (h.includes('strategicworldnewscommodity')) return 'commodity';
   if (h.startsWith('finance.')) return 'finance';
   if (h.startsWith('happy.')) return 'happy';
   if (h.startsWith('commodity.')) return 'commodity';

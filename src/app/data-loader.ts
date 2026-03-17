@@ -61,6 +61,7 @@ import {
   fetchChokepointStatus,
   fetchCriticalMinerals,
   fetchSanctionsPressure,
+  fetchRadiationWatch,
 } from '@/services';
 import { getMarketWatchlistEntries } from '@/services/market-watchlist';
 import { fetchStockAnalysesForTargets, getStockAnalysisTargets } from '@/services/stock-analysis';
@@ -477,6 +478,9 @@ export class DataLoaderManager implements AppModule {
     if (SITE_VARIANT !== 'happy' && (this.ctx.panels['sanctions-pressure'] || this.ctx.mapLayers.sanctions)) {
       tasks.push({ name: 'sanctions', task: runGuarded('sanctions', () => this.loadSanctionsPressure()) });
     }
+    if (SITE_VARIANT !== 'happy' && (this.ctx.panels['radiation-watch'] || this.ctx.mapLayers.radiationWatch)) {
+      tasks.push({ name: 'radiation', task: runGuarded('radiation', () => this.loadRadiationWatch()) });
+    }
 
     if (SITE_VARIANT !== 'happy') {
       tasks.push({ name: 'techReadiness', task: runGuarded('techReadiness', () => (this.ctx.panels['tech-readiness'] as TechReadinessPanel)?.refresh()) });
@@ -581,6 +585,9 @@ export class DataLoaderManager implements AppModule {
           break;
         case 'sanctions':
           await this.loadSanctionsPressure();
+          break;
+        case 'radiationWatch':
+          await this.loadRadiationWatch();
           break;
         case 'ucdpEvents':
         case 'displacement':
@@ -2689,6 +2696,25 @@ export class DataLoaderManager implements AppModule {
       console.error('[App] Sanctions pressure fetch failed:', error);
       dataFreshness.recordError('sanctions_pressure', String(error));
       this.ctx.statusPanel?.updateApi('OFAC', { status: 'error' });
+    }
+  }
+
+  async loadRadiationWatch(): Promise<void> {
+    try {
+      const result = await fetchRadiationWatch();
+      const anomalies = result.observations.filter((observation) => observation.severity !== 'normal');
+      this.callPanel('radiation-watch', 'setData', result);
+      this.ctx.intelligenceCache.radiation = result;
+      signalAggregator.ingestRadiationObservations(result.observations);
+      this.ctx.map?.setRadiationObservations(anomalies);
+      this.ctx.map?.setLayerReady('radiationWatch', anomalies.length > 0);
+      if (result.observations.length > 0) {
+        dataFreshness.recordUpdate('radiation', result.observations.length);
+      }
+    } catch (error) {
+      console.error('[App] Radiation watch fetch failed:', error);
+      this.ctx.map?.setLayerReady('radiationWatch', false);
+      dataFreshness.recordError('radiation', String(error));
     }
   }
 

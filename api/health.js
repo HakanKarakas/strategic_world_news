@@ -36,6 +36,7 @@ const BOOTSTRAP_KEYS = {
   securityAdvisories: 'intelligence:advisories-bootstrap:v1',
   customsRevenue:    'trade:customs-revenue:v1',
   sanctionsPressure: 'sanctions:pressure:v1',
+  radiationWatch:    'radiation:observations:v1',
 };
 
 const STANDALONE_KEYS = {
@@ -131,6 +132,7 @@ const SEED_META = {
   securityAdvisories:  { key: 'seed-meta:intelligence:advisories',           maxStaleMin: 90 },
   customsRevenue:      { key: 'seed-meta:trade:customs-revenue',              maxStaleMin: 1440 },
   sanctionsPressure:   { key: 'seed-meta:sanctions:pressure',                 maxStaleMin: 720 },
+  radiationWatch:      { key: 'seed-meta:radiation:observations',             maxStaleMin: 30 },
 };
 
 // Standalone keys that are populated on-demand by RPC handlers (not seeds).

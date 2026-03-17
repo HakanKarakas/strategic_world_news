@@ -7,6 +7,8 @@ import { promisify } from 'util';
 import pkg from './package.json';
 import { VARIANT_META } from './src/config/variant-meta';
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 const isE2E = process.env.VITE_E2E === '1';
 const isDesktopBuild = process.env.VITE_DESKTOP_RUNTIME === '1';
 
@@ -740,6 +742,7 @@ export default defineConfig({
         enabled: false,
       },
     }),
+    cloudflare()
   ],
   resolve: {
     alias: {

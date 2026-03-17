@@ -35,7 +35,8 @@ const BOOTSTRAP_KEYS = {
   forecasts:         'forecast:predictions:v2',
   securityAdvisories: 'intelligence:advisories-bootstrap:v1',
   customsRevenue:    'trade:customs-revenue:v1',
-  thermalEscalation: 'thermal:escalation:v1',
+  sanctionsPressure: 'sanctions:pressure:v1',
+  radiationWatch:    'radiation:observations:v1',
 };
 
 const STANDALONE_KEYS = {
@@ -71,6 +72,7 @@ const STANDALONE_KEYS = {
   corridorrisk:          'supply_chain:corridorrisk:v1',
   chokepointTransits:    'supply_chain:chokepoint_transits:v1',
   transitSummaries:      'supply_chain:transit-summaries:v1',
+  thermalEscalation:     'thermal:escalation:v1',
 };
 
 const SEED_META = {
@@ -130,6 +132,8 @@ const SEED_META = {
   usniFleet:           { key: 'seed-meta:military:usni-fleet',               maxStaleMin: 420 },
   securityAdvisories:  { key: 'seed-meta:intelligence:advisories',           maxStaleMin: 90 },
   customsRevenue:      { key: 'seed-meta:trade:customs-revenue',              maxStaleMin: 1440 },
+  sanctionsPressure:   { key: 'seed-meta:sanctions:pressure',                 maxStaleMin: 720 },
+  radiationWatch:      { key: 'seed-meta:radiation:observations',             maxStaleMin: 30 },
   thermalEscalation:   { key: 'seed-meta:thermal:escalation',                 maxStaleMin: 240 },
 };
 
@@ -191,7 +195,7 @@ function dataSize(parsed) {
                       'chokepoints', 'minerals', 'anomalies', 'flows', 'bases', 'flights',
                       'theaters', 'fleets', 'warnings', 'closures', 'cables',
                       'airports', 'closedIcaos', 'categories', 'regions', 'entries', 'satellites',
-                      'sectors', 'statuses', 'scores', 'topics', 'advisories', 'months', 'clusters']) {
+                      'sectors', 'statuses', 'scores', 'topics', 'advisories', 'months']) {
       if (Array.isArray(parsed[k])) return parsed[k].length;
     }
     return Object.keys(parsed).length;

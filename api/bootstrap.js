@@ -22,6 +22,7 @@ const BOOTSTRAP_CACHE_KEYS = {
   minerals:         'supply_chain:minerals:v2',
   giving:           'giving:summary:v1',
   climateAnomalies: 'climate:anomalies:v1',
+  radiationWatch: 'radiation:observations:v1',
   wildfires:        'wildfire:fires:v1',
   cyberThreats:     'cyber:threats-bootstrap:v2',
   techReadiness:    'economic:worldbank-techreadiness:v1',
@@ -49,19 +50,20 @@ const BOOTSTRAP_CACHE_KEYS = {
   forecasts:         'forecast:predictions:v2',
   securityAdvisories: 'intelligence:advisories-bootstrap:v1',
   customsRevenue:    'trade:customs-revenue:v1',
-  thermalEscalation: 'thermal:escalation:v1',
+  sanctionsPressure: 'sanctions:pressure:v1',
 };
 
 const SLOW_KEYS = new Set([
   'bisPolicy', 'bisExchange', 'bisCredit', 'minerals', 'giving',
   'sectors', 'etfFlows', 'wildfires', 'climateAnomalies',
+  'radiationWatch',
   'cyberThreats', 'techReadiness', 'progressData', 'renewableEnergy',
   'naturalEvents',
   'cryptoQuotes', 'gulfQuotes', 'stablecoinMarkets', 'unrestEvents', 'ucdpEvents',
   'techEvents',
   'securityAdvisories',
   'customsRevenue',
-  'thermalEscalation',
+  'sanctionsPressure',
 ]);
 const FAST_KEYS = new Set([
   'earthquakes', 'outages', 'serviceStatuses', 'macroSignals', 'chokepoints', 'chokepointTransits',
